@@ -1,0 +1,45 @@
+@font-face {
+  font-family: railway-regular;
+  src: url("../fonts/Raleway-Regular.ttf");
+}
+@font-face {
+  font-family: railway-medium;
+  src: url("../fonts/Raleway-Medium.ttf");
+}
+@font-face {
+  font-family: railway-bold;
+  src: url("../fonts/Raleway-Bold.ttf");
+}
+
+:root {
+  --white: #ffffff;
+  --black: rgb(0, 0, 0);
+  --light-gray: rgb(209, 203, 203);
+  --thin-gray:  rgb(231, 231, 231);
+  --focus: rgb(107, 105, 105);
+}
+
+input {
+  border: none;
+  border-bottom: 2px solid rgb(209, 203, 203);
+  padding: 0.5rem 0;
+  width: 100%;
+  outline: none;
+  font-size: 1rem;
+  font-family: railway-medium;
+  transition: 0.1s;
+}
+
+input::placeholder {
+  color: rgb(209, 203, 203);
+}
+
+input:focus {
+  border-bottom: 2px solid var(--focus);
+}
+
+button {
+  border: none;
+  background: none;
+  outline: none;
+}
