@@ -14,7 +14,8 @@
           <p>Company: {{ company }}</p>
           <p>Skill: {{ skill }}</p>
           <p>Average: {{ calculateAverage }}</p>
-          <ul :class="
+          <ul
+            :class="
               isActive ? 'is-active accordion-content' : 'accordion-content'
             "
           >
@@ -25,9 +26,7 @@
 
           <div class="tags-section">
             <div class="tags-container">
-              <div class="tag" v-for="(tag, index) in tags" :key="index">
-                {{ tag }}
-              </div>
+              <tag v-for="(tag, index) in tags" :key="index" :tag="tag" />
             </div>
             <input
               type="text"
@@ -43,7 +42,9 @@
 </template>
 
 <script>
+import Tag from "./Tag.vue";
 export default {
+  components: { Tag },
   name: "StudentCard",
   data() {
     return {
@@ -65,7 +66,7 @@ export default {
   methods: {
     addTag() {
       this.$emit("tagAdded", this.tagValue, this.id);
-      this.tagValue = ''
+      this.tagValue = "";
     },
   },
   computed: {
@@ -75,7 +76,8 @@ export default {
     },
     calculateAverage() {
       let testScoresArr = this.testScores.map((x) => parseInt(x, 10));
-      let averageScore = testScoresArr.reduce((a, b) => a + b, 0) / this.testScores.length;
+      let averageScore =
+        testScoresArr.reduce((a, b) => a + b, 0) / this.testScores.length;
       return `${averageScore}%`;
     },
   },
@@ -83,7 +85,6 @@ export default {
 </script>
 
 <style scoped>
-
 h1 {
   color: var(--black);
   font-family: railway-bold;
@@ -102,7 +103,8 @@ li {
   cursor: pointer;
 }
 
-.fas:active, .fas:hover {
+.fas:active,
+.fas:hover {
   color: var(--black);
 }
 

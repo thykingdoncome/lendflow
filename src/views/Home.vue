@@ -2,18 +2,12 @@
   <div class="home-component">
     <div class="cards-container">
       <div class="search-container">
-        <div>
-          <Search placeholder="Search by name" v-model="nameSearch" />
-        </div>
-        <div>
-          <Search placeholder="Search by tag" v-model="tagSearch" />
-        </div>
+        <Search placeholder="Search by name" v-model="nameSearch" />
+        <Search placeholder="Search by tag" v-model="tagSearch" />
       </div>
-      <!-- STUDENT CARD COMPONENT RENDER WITH PROPS -->
 
-      <div v-if="loading" class="spinner-container">
-        <img src="../assets/spinner.gif" alt="spinner">
-      </div>
+      <spinner v-if="loading" />
+      <!-- STUDENT CARD COMPONENT RENDER WITH PROPS -->
       <StudentCard
         v-for="student in filteredStudents"
         :key="student.id"
@@ -38,24 +32,26 @@ import { getAllStudents } from "@/API/services/api.students";
 
 import StudentCard from "@/components/StudentCard";
 import Search from "@/components/Search";
+import Spinner from "../components/Spinner.vue";
 
 export default {
   name: "Home",
   components: {
     StudentCard,
     Search,
+    Spinner,
   },
   data() {
     return {
       students: [],
       nameSearch: "",
       tagSearch: "",
-      loading: false
+      loading: false,
     };
   },
   methods: {
     async fetchStudents() {
-      this.loading = true
+      this.loading = true;
 
       try {
         const res = await getAllStudents();
@@ -65,12 +61,11 @@ export default {
         this.students = this.students.map((student) => {
           return { ...student, tags: [] };
         });
-        this.loading = false
+        this.loading = false;
       } catch (error) {
-        this.loading = false
+        this.loading = false;
         console.log(error, "eeerrr");
       }
-  
     },
     addTagToStudent(tagName, studentId) {
       const studentIndex = this.students.findIndex(
@@ -89,10 +84,11 @@ export default {
 
       return this.students.filter((student) => {
         let isNameIncluded = !nameFilter;
+        let fullName = `${student.firstName} ${student.lastName}`;
         if (nameFilter) {
-          isNameIncluded =
-            student.firstName.toLowerCase().includes(nameFilter) ||
-            student.lastName.toLowerCase().includes(nameFilter);
+          isNameIncluded = fullName.toLowerCase().includes(nameFilter);
+          // student.firstName.toLowerCase().includes(nameFilter) ||
+          // student.lastName.toLowerCase().includes(nameFilter);
         }
 
         let isTagIncluded = !tagFilter;
@@ -164,16 +160,15 @@ export default {
 }
 
 .spinner-container {
-      height: 100%;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    /* z-index: 100; */
-    left: 0;
-    align-items: center;
-    justify-content: center;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* z-index: 100; */
+  left: 0;
+  align-items: center;
+  justify-content: center;
 }
-
 </style>

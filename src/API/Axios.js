@@ -17,6 +17,7 @@ const errorInterceptor = error => {
             break;
         default:
             console.error(error.response.status, error.message);
+            return
     }
     return Promise.reject(error);
 }
@@ -29,6 +30,7 @@ const responseInterceptor = response => {
             break;
         default:
             console.log(response, 'response')
+            return
     }
     return response;
 }
